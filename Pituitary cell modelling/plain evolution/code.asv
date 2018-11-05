@@ -1,0 +1,96 @@
+N0=6;
+Ts=9; %time steps
+dt=0.0;
+R0=0.05;
+L0=2e-6;
+eta=1;
+dragc=6*pi*eta*R0;
+mu=1;
+%k=1e-11;
+
+X=zeros(Ts,N0);
+Y=zeros(Ts,N0);
+X(1,:)=rand(N0,1);
+Y(1,:)=rand(N0,1);
+
+rvect=zeros(1,2);
+Force=zeros(2,N0);
+
+for k=2:Ts  %for time steps
+
+xk=X(k-1,:);
+yk=Y(k-1,:);
+dx= repmat(xk,N0,1)-repmat(xk,N0,1)';
+dy= repmat(yk,N0,1)-repmat(yk,N0,1)';
+
+r=zeros(N0,N0,2);
+r(:,:,1)=dx;
+r(:,:,2)=dy;
+    
+    
+    
+    for i=1:N0 %for each body
+    F=zeros(1,2);
+    
+    
+    %interactions of i th body with all other 6 bodies------------
+    for j=1: N0  
+        rvect=zeros(1,2);
+        rvect(1,1)=r(i,j,1);rvect(1,2)=r(i,j,2);
+        
+        F=F+mu*rvect*(L0-norm(rvect,2));
+        
+    end
+    %---------------------------   
+    
+    
+    Force(1:2,i)=F;        
+    end %---------------------------   
+    
+    X(k,:)=X(k-1,:)+ Force(1,:)*dt/(eta);
+    Y(k,:)=Y(k-1,:)+ Force(2,:)*dt/(eta);
+    
+    
+    xnew=X(k,:);
+    ynew=Y(k,:);
+    
+    xnew=(xnew>2).*(4-xnew)+xnew.*(xnew<=2);
+    xnew=(xnew<-2).*(-4-xnew)+xnew.*(xnew>=-2);
+    
+     ynew=(ynew>2).*(4-ynew)+ynew.*(ynew<=2);
+     ynew=(ynew<-2).*(-4-ynew)+ynew.*(ynew>=-2);
+
+    
+    X(k,:)=xnew;
+    Y(k,:)=ynew;
+    
+    
+    % This doesn't work [X(k,1:6);Y(k,1:6)]=[X(k-1,1:6);Y(k-1,1:6)]+Force(1:2,:);
+    
+end
+
+
+
+
+
+
+
+%-----------------------for plotting circles
+
+t=-pi:0.01:pi;
+grid on
+for k=1:Ts
+ %d=set(gcf,'Color',[1,0.4,0.6]); 
+for i=1:N0
+axis([-2 2 -2 2])
+grid on
+plot(X(k,i)+R0*cos(t),Y(k,i)+R0*sin(t),'red');
+hold on
+end
+
+pause(0.31);
+hold off
+end
+
+
+%-----------------------for plotting circles
