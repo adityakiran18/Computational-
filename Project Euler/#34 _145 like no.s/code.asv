@@ -1,0 +1,27 @@
+
+
+A=[1:1000];
+ind=ones(1,1000);
+
+answer=0;
+
+for i=1:1000
+
+    if ind(i)~=1
+        continue;
+    end
+    
+    
+    N1=sumofdiv(i);
+    M1=sumofdiv(N1);
+    if(N1==M1)
+      answer=answer+N1+M1;
+      ind(N1)=0;ind(M1)=0;
+      
+    end
+    
+    
+    
+    
+    
+end

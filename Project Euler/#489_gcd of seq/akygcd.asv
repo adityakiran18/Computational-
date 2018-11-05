@@ -1,0 +1,20 @@
+function  [G] = akygcd(x,y)
+
+
+
+if x<y
+ z=x;
+ x=y;
+ y=z;
+end
+
+
+
+
+
+
+
+
+
+
+end

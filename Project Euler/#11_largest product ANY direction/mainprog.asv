@@ -1,0 +1,63 @@
+Hmax=1;
+Vmax=1;
+LDmax=1;
+RDmax=1;
+
+Harr=zeros(10,1);
+Varr=zeros(10,1);
+LDarr=zeros(10,1);
+RDarr=zeros(10,1);
+
+Hval=1;
+Vval=1;
+LDval=1;
+RDval=1;
+
+%4 terms in a series
+N=8;
+
+for i=1: 20
+    
+[Harr,Hval]=maximizer(Mat(i,1:20),N);    
+[Varr,Vval]=maximizer(Mat(1:20,i),N);    
+
+if (Hval>Hmax)
+   Hmax=Hval;
+   Hmaxarr=Harr;
+end
+
+
+if (Vval>Vmax)
+   Vmax=Vval;
+   Vmaxarr=Varr;
+end
+
+end
+
+
+
+for i=-(20-N):(20-N)
+
+    [LDarr,LDval]=maximizer(diag(Mat,i),N);    
+    [RDarr,RDval]=maximizer(diag(flipud(Mat),i),N);    
+    
+    if (LDval>LDmax)
+   LDmax=LDval;
+   LDmaxarr=LDarr;
+    end
+    
+    if (RDval>RDmax)
+   RDmax=RDval;
+   RDmaxarr=RDarr;
+    end
+    
+
+end
+[[ Hmax  Hmaxarr]; [Vmax  Vmaxarr']; [LDmax  LDmaxarr'];[RDmax  RDmaxarr']]
+
+
+[Hmax; Vmax; LDmax;RDmax]
+[Hmaxarr; Vmaxarr'; LDmaxarr';RDmaxarr']
+
+
+

@@ -1,0 +1,23 @@
+function  [sum] = sumofdiv(x)
+
+int x;
+
+sum=0;
+while x>=1
+    
+sum=sum+ factorial(rem(x,10));
+x=floor(x/10);
+    
+end
+
+
+
+
+for i=1:floor(x/2)+2
+
+if (rem(x,i)==0)
+    sum=sum+i;
+end
+
+
+end

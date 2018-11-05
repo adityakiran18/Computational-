@@ -1,0 +1,20 @@
+tic
+for i=1:10000
+    for j=1:10000
+        
+     r=rem(i,j);
+    end
+end
+toc
+
+
+
+
+tic
+for i=1:1000
+    for j=1:1000
+        
+    r=mod(i,j);
+    end
+end
+toc
